@@ -307,7 +307,7 @@ impl App {
         let mut time_state = TimeState::new();
         let mut input_state = InputState::new(&winit_window);
 
-        let renderer_result = renderer_builder.build(&window);
+        let renderer_result = unsafe { renderer_builder.build(&window) };
         let mut renderer = match renderer_result {
             Ok(renderer) => renderer,
             Err(e) => {

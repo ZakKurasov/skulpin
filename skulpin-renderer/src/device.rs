@@ -1,4 +1,5 @@
 use ash::vk;
+use ash::vk::{version_major, version_minor, version_patch, make_version};
 use ash::prelude::VkResult;
 use super::VkInstance;
 
@@ -126,9 +127,9 @@ impl VkDevice {
     fn vk_version_to_string(version: u32) -> String {
         format!(
             "{}.{}.{}",
-            ash::vk_version_major!(version),
-            ash::vk_version_minor!(version),
-            ash::vk_version_patch!(version)
+            ash::vk::version_major(version),
+            ash::vk::version_minor(version),
+            ash::vk::version_patch(version)
         )
     }
 
@@ -231,7 +232,7 @@ impl VkDevice {
                     queue_family_index,
                     surface,
                 )
-            };
+            }.is_ok();
 
             // A queue family that supports both is ideal. If we find it, break out early.
             if supports_graphics && supports_present {

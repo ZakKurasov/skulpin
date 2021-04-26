@@ -157,7 +157,7 @@ impl RendererBuilder {
     }
 
     /// Builds the renderer. The window that's passed in will be used for creating the swapchain
-    pub fn build(
+    pub unsafe fn build(
         &self,
         window: &dyn Window,
     ) -> Result<Renderer, CreateRendererError> {
@@ -235,7 +235,7 @@ impl From<vk::Result> for CreateRendererError {
 
 impl Renderer {
     /// Create the renderer
-    pub fn new(
+    pub unsafe fn new(
         app_name: &CString,
         window: &dyn Window,
         validation_layer_debug_report_flags: vk::DebugReportFlagsEXT,

@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 skulpin-renderer = { path = "../skulpin-renderer" }
 
-winit = "0.21"
+winit = "0.24"
 raw-window-handle = "0.3"
 
 log="0.4"

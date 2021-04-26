@@ -14,8 +14,8 @@ textlayout = ["skia-safe/textlayout"]
 complete = ["skia-safe/shaper", "skia-safe/svg", "skia-safe/textlayout"]
 
 [dependencies]
-ash = ">=0.29"
-skia-safe = { version = ">=0.21", features = ["vulkan"] }
-skia-bindings = { version = ">=0.21" }
+ash = ">=0.32.1"
+skia-safe = { version = ">=0.39.1", features = ["vulkan"] }
+skia-bindings = { version = ">=0.39.1" }
 
 log="0.4"

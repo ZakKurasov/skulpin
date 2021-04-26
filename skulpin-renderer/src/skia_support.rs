@@ -50,7 +50,7 @@ impl VkSkiaContext {
             )
         };
 
-        let context = skia_safe::gpu::Context::new_vulkan(&backend_context).unwrap();
+        let context = skia_safe::gpu::DirectContext::new_vulkan(&backend_context, None).unwrap();
 
         VkSkiaContext { context }
     }
@@ -58,7 +58,7 @@ impl VkSkiaContext {
     unsafe fn get_proc(
         instance: &VkInstance,
         of: skia_safe::gpu::vk::GetProcOf,
-    ) -> Option<unsafe extern "system" fn() -> c_void> {
+    ) -> Option<unsafe extern "system" fn()> {
         use vk::Handle;
 
         match of {

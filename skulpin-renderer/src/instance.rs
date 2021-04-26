@@ -1,7 +1,8 @@
 use std::ffi::CString;
 
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
-use ash::vk;
+pub use ash::vk;
+pub use ash::vk::{make_version, version_major, version_minor, version_patch};
 use ash::prelude::VkResult;
 
 use super::Window;
@@ -65,7 +66,7 @@ impl From<vk::Result> for VkCreateInstanceError {
 
 impl VkInstance {
     /// Creates a vulkan instance.
-    pub fn new(
+    pub unsafe fn new(
         window: &dyn Window,
         app_name: &CString,
         validation_layer_debug_report_flags: vk::DebugReportFlagsEXT,
@@ -78,9 +79,9 @@ impl VkInstance {
         let vulkan_version = match entry.try_enumerate_instance_version()? {
             // Vulkan 1.1+
             Some(version) => {
-                let major = ash::vk_version_major!(version);
-                let minor = ash::vk_version_minor!(version);
-                let patch = ash::vk_version_patch!(version);
+                let major = ash::vk::version_major(version);
+                let minor = ash::vk::version_minor(version);
+                let patch = ash::vk::version_patch(version);
 
                 (major, minor, patch)
             }
@@ -98,7 +99,7 @@ impl VkInstance {
 
         // Expected to be 1.1.0 or 1.0.0 depeneding on what we found in try_enumerate_instance_version
         // https://vulkan.lunarg.com/doc/view/1.1.70.1/windows/tutorial/html/16-vulkan_1_1_changes.html
-        let api_version = ash::vk_make_version!(vulkan_version.0, vulkan_version.1, 0);
+        let api_version = ash::vk::make_version(vulkan_version.0, vulkan_version.1, 0);
 
         // Info that's exposed to the driver. In a real shipped product, this data might be used by
         // the driver to make specific adjustments to improve performance
